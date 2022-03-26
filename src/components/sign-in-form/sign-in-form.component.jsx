@@ -1,6 +1,6 @@
 //import "./sign-in-form.styles.scss";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
@@ -27,6 +27,13 @@ const SignInForm = () => {
 
   const signInWithGoogle = async () => {
     await signInWithGooglePopup();
+    signBackToHomeHandler();
+  };
+
+  const navigate = useNavigate();
+
+  const signBackToHomeHandler = () => {
+    navigate("/");
   };
 
   const handleSubmit = async (event) => {
@@ -35,6 +42,7 @@ const SignInForm = () => {
     try {
       await signInAuthUserWithEmailAndPassword(email, password);
       resetFormFields();
+      signBackToHomeHandler();
     } catch (error) {
       console.log("user sign in failed", error);
     }

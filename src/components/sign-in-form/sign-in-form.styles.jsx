@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SignInContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 380px;
+  width: 420px;
 
   h2 {
     margin: 10px 0;
@@ -13,6 +13,7 @@ export const SignInContainer = styled.div`
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+
 `;
 
 // .sign-In-container {
