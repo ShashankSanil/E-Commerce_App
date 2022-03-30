@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -67,12 +66,7 @@ export const getCategoriesAndDocument = async () => {
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-  return categoryMap;
+  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
 
 export const createUserDocumentFromAuth = async (
@@ -102,7 +96,7 @@ export const createUserDocumentFromAuth = async (
     }
   }
 
-  return userDocRef;
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -119,3 +113,16 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListner = (callback) =>
   onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unSubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unSubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
