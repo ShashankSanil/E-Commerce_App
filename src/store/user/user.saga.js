@@ -30,6 +30,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalDetails) {
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailed(error));
+    alert(error)
   }
 }
 
@@ -39,6 +40,7 @@ export function* signInWithGoogle() {
     yield call(getSnapshotFromUserAuth, user);
   } catch (error) {
     yield put(signInFailed(error));
+    alert(error)
   }
 }
 
@@ -52,6 +54,7 @@ export function* signInWithEmail({ payload: { email, password } }) {
     yield call(getSnapshotFromUserAuth, user);
   } catch (error) {
     yield put(signInFailed(error));
+    alert(error.code)
   }
 }
 
@@ -62,6 +65,7 @@ export function* isUserAuthenticated() {
     yield call(getSnapshotFromUserAuth, userAuth);
   } catch (error) {
     yield put(signInFailed(error));
+    alert(error)
   }
 }
 
@@ -75,6 +79,7 @@ export function* signUp({ payload: { email, password, displayName } }) {
     yield put(signUpSuccess(user, { displayName }));
   } catch (error) {
     yield put(signUpFailed(error));
+    alert(error)
   }
 }
 
@@ -84,6 +89,7 @@ export function* signOut() {
     yield put(signOutSuccess());
   } catch (error) {
     yield put(signOutFailed(error));
+    alert(error)
   }
 }
 
